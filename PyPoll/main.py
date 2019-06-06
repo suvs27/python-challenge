@@ -1,10 +1,10 @@
 #PyPoll
 import os
 import csv
+import operator
 
 # Lists to store data
 vote = []
-
 
 #read csv file
 #path to the .py file 
@@ -69,16 +69,43 @@ print("Election Results")
 print("-------------------------")
 print(f"Total Votes: {total_vote}")
 print("-------------------------")
-for key in poll_dictionary: print(key:value)
-#print(poll_dictionary[0])
-#Khan: 63.000% (2218231)
-#Correy: 20.000% (704200)
-#Li: 14.000% (492940)
-#O'Tooley: 3.000% (105630)
-#-------------------------
-#Winner: Khan
-#-------------------------
-#```
+#print(poll_dictionary)
+#for key,value in poll_dictionary.items(): print(f"{key}: {value[0]}")
+a = []
+for key,value in poll_dictionary.items():
+    a.append(int(value[1]))
+#print(a)
+a.sort(reverse=True)
+#print(a)
+
+for item in a:
+    for key,value in poll_dictionary.items():
+        #print(key)
+        if item == int(value[1]):
+            print(f"{key}: {value[0]} ({value[1]})")
+print("-------------------------\n")
+print(f"Winner:  {winner}\n")
+print("-------------------------\n")
+
+# Specify the file to write to
+output_path = os.path.join("..", "output", "Poll.txt")
+
+# Open the file using "write" mode. Specify the variable to hold the contents
+file = open("PyPoll.txt","w")
+file.write("Election Results\n")
+file.write("----------------------------\n")
+file.write(f"Total Votes: {total_vote}\n")
+file.write("----------------------------\n")
+for item in a:
+    for key,value in poll_dictionary.items():
+        #print(key)
+        if item == int(value[1]):
+            file.write(f"{key}: {value[0]} ({value[1]})\n")
+file.write("-------------------------\n")
+file.write(f"Winner:  {winner}\n")
+file.write("-------------------------\n")
 
 
+file.close()
+    
 
